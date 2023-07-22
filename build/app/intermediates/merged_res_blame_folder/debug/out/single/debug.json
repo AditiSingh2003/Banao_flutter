@@ -20,10 +20,6 @@
         "source": "com.example.new_scroll_page.app-main-7:/drawable-v21/launch_background.xml"
     },
     {
-        "merged": "com.example.new_scroll_page.app-merged_res-13:/drawable_launch_background.xml.flat",
-        "source": "com.example.new_scroll_page.app-main-7:/drawable/launch_background.xml"
-    },
-    {
         "merged": "com.example.new_scroll_page.app-merged_res-13:/mipmap-xxhdpi_ic_launcher.png.flat",
         "source": "com.example.new_scroll_page.app-main-7:/mipmap-xxhdpi/ic_launcher.png"
     }

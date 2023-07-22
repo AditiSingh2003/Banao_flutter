@@ -4,7 +4,7 @@
             "outputFile": "com.example.new_scroll_page.app-mergeDebugResources-11:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "D:\\Flutterprojects\\new_scroll_page\\android\\app\\src\\main\\res\\values-night\\styles.xml",
+                    "source": "D:\\Flutterprojects\\Scroll_page\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

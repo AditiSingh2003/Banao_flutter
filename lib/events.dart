@@ -39,7 +39,7 @@ class _ProgramsState extends State<Events> {
                 style: TextStyle(
                   fontSize: 20,
                   fontFamily: 'Lora',
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w700
                 ),
               ),
               Row(
@@ -64,13 +64,13 @@ class _ProgramsState extends State<Events> {
           ),
           SizedBox(height: 20),
           Container(
-            height: screenHeight * 0.39,
+            height: 350,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: 3,
               itemBuilder: (context, index) {
                 return Container(
-                  width: screenWidth * 0.7,
+                  width: 280,
                   margin: EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -82,7 +82,7 @@ class _ProgramsState extends State<Events> {
                         Image.asset(
                           images[index],
                           fit: BoxFit.fitWidth,
-                          width: screenWidth * 0.7,
+                          width: 280,
                         ),
                         SizedBox(height: 15),
                               Padding(
@@ -96,7 +96,7 @@ class _ProgramsState extends State<Events> {
                                         fontFamily: 'Inter',
                                         fontSize: 20,
                                         color: Color(0xFF598BED),
-                                        fontWeight: FontWeight.w500,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                     SizedBox(height: 10),

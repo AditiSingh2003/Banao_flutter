@@ -59,7 +59,7 @@
                     }
                 },
                 {
-                    "source": "D:\\Flutterprojects\\new_scroll_page\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "source": "D:\\Flutterprojects\\Scroll_page\\android\\app\\src\\main\\res\\values\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
