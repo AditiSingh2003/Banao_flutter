@@ -64,7 +64,7 @@ class _ProgramsState extends State<Events> {
           ),
           SizedBox(height: 20),
           Container(
-            height: 350,
+            height: 400,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: 3,
