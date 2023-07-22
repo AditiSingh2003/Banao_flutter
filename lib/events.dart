@@ -64,13 +64,13 @@ class _ProgramsState extends State<Events> {
           ),
           SizedBox(height: 20),
           Container(
-            height: 400,
+            height: screenHeight * 0.39,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: 3,
               itemBuilder: (context, index) {
                 return Container(
-                  width: 280,
+                  width: screenWidth * 0.7,
                   margin: EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -82,7 +82,7 @@ class _ProgramsState extends State<Events> {
                         Image.asset(
                           images[index],
                           fit: BoxFit.fitWidth,
-                          width: 280,
+                          width: screenWidth * 0.7,
                         ),
                         SizedBox(height: 15),
                               Padding(
