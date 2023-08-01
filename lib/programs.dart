@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:new_scroll_page/programModel.dart';
 
 class Programs extends StatefulWidget {
   const Programs({super.key});
@@ -9,23 +12,32 @@ class Programs extends StatefulWidget {
 
 class _ProgramsState extends State<Programs> {
 
-  List<String> images = [
-    'assets/Pro.png',
-    'assets/Pro.png',
-    'assets/Pro.png',
-  ];
+  List<Program> programs = [];
 
-  List<String> titles = [
-    'LIFESTYLE',
-    'LIFESTYLE',
-    'LIFESTYLE',
-  ]; 
+  Future getData() async {
+    Response response = await get(Uri.https('632017e19f82827dcf24a655.mockapi.io', 'api/programs'));
+    var jsonData = jsonDecode(response.body);
+
+    for (var eachPro in jsonData['items']){
+      final pro = Program(
+        name: eachPro['name'],
+        category: eachPro['category'],
+        lesson: eachPro['lesson'],
+      );
+      programs.add(pro);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    return Container(
+    return FutureBuilder(
+      future: getData(),
+      builder: (context, snapshot) {
+        // is it done loading?  then show data
+        if(snapshot.connectionState == ConnectionState.done) {
+          return Container(
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +79,7 @@ class _ProgramsState extends State<Programs> {
             height: screenHeight * 0.36,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 3,
+              itemCount: programs.length,
               itemBuilder: (context, index) {
                 return Container(
                   width: screenWidth * 0.7,
@@ -80,7 +92,7 @@ class _ProgramsState extends State<Programs> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Image.asset(
-                          images[index],
+                          'assets/Pro.png',
                           fit: BoxFit.fitWidth,
                           width: screenWidth * 0.7,
                         ),
@@ -91,7 +103,7 @@ class _ProgramsState extends State<Programs> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      titles[index],
+                                      programs[index].category,
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontFamily: 'Inter',
@@ -100,7 +112,7 @@ class _ProgramsState extends State<Programs> {
                                       ),
                                     ),
                                     SizedBox(height: 10),
-                                    Text('A complete guide for your new born baby',
+                                    Text(programs[index].name,
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: 'Inter',
@@ -109,7 +121,7 @@ class _ProgramsState extends State<Programs> {
                                     ),
                                     ),
                                     SizedBox(height: 10),
-                                    Text('16 lessons',
+                                    Text(programs[index].lesson.toString() + ' lessons',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Inter',
@@ -129,6 +141,14 @@ class _ProgramsState extends State<Programs> {
           SizedBox(height: 10),
         ],
       ),
+    );
+        } else {
+          // otherwise, show a loading indicator
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      }
     );
   }
 }

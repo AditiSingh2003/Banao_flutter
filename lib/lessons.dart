@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'lessonModel.dart';
 
 class Lessons extends StatefulWidget {
   const Lessons({super.key});
@@ -9,23 +12,34 @@ class Lessons extends StatefulWidget {
 
 class _ProgramsState extends State<Lessons> {
 
-  List<String> images = [
-    'assets/Yoga.png',
-    'assets/Yoga.png',
-    'assets/Yoga.png',
-  ];
+  List<LessonModel> lessons = [];
 
-  List<String> titles = [
-    'BABYCARE',
-    'BABYCARE',
-    'BABYCARE',
-  ]; 
+  Future getData () async {
+    Response response = await get(Uri.https('632017e19f82827dcf24a655.mockapi.io', 'api/lessons'));
+    var jsonData = jsonDecode(response.body);
+
+    for (var eachLesson in jsonData['items']){
+      final less = LessonModel(
+        name: eachLesson['name'],
+        duration: eachLesson['duration'],
+        category: eachLesson['category'],
+        locked: eachLesson['locked'],
+      );
+      lessons.add(less);
+    }
+    print(lessons.length);
+  }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    return Container(
+    return FutureBuilder(
+      future: getData(),
+      builder: (context, snapshot) {
+        // is it done loading?  then show data
+        if(snapshot.connectionState == ConnectionState.done) {
+          return Container(
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +81,7 @@ class _ProgramsState extends State<Lessons> {
             height: screenHeight * 0.37,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 3,
+              itemCount: lessons.length,
               itemBuilder: (context, index) {
                 return Container(
                   width: screenWidth * 0.7,
@@ -80,7 +94,7 @@ class _ProgramsState extends State<Lessons> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Image.asset(
-                          images[index],
+                          'assets/Yoga.png',
                           fit: BoxFit.fitWidth,
                           width: screenWidth * 0.7,
                         ),
@@ -91,7 +105,7 @@ class _ProgramsState extends State<Lessons> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      titles[index],
+                                      lessons[index].category,
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontFamily: 'Inter',
@@ -100,7 +114,9 @@ class _ProgramsState extends State<Lessons> {
                                       ),
                                     ),
                                     SizedBox(height: 10),
-                                    Text('Understanding of human behaviour',
+                                    Text( lessons[index].name,
+                                    maxLines: 2, // Set the maximum number of lines before truncating the text
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: 'Inter',
@@ -112,14 +128,26 @@ class _ProgramsState extends State<Lessons> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text('3 min',
+                                        Text(
+                                          '${lessons[index].duration} min',
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontFamily: 'Inter',
                                           color: Colors.grey.shade500,
                                         ),
                                         ),
-                                        Icon( Icons.lock, size: 24, color: Colors.grey.shade500,)
+                                        if (lessons[index].locked == false)
+                                        Icon(
+                                          Icons.lock_outline_rounded,
+                                          size: 20,
+                                          color: Colors.grey.shade500,
+                                        ),
+                                        if (lessons[index].locked == true)
+                                          Icon(
+                                            Icons.lock_open_rounded,
+                                            size: 20,
+                                            color: Colors.grey.shade500,
+                                          ),
                                       ],
                                     ),
                                   ],
@@ -135,6 +163,15 @@ class _ProgramsState extends State<Lessons> {
           SizedBox(height: 10),
         ],
       ),
+    );
+      } 
+      // else show a loading indicator
+      else {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+      }
     );
   }
 }
