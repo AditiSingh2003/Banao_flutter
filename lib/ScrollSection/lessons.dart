@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'lessonModel.dart';
+import '../Model/lessonModel.dart';
 
 class Lessons extends StatefulWidget {
   const Lessons({super.key});
@@ -27,7 +27,6 @@ class _ProgramsState extends State<Lessons> {
       );
       lessons.add(less);
     }
-    print(lessons.length);
   }
 
   @override

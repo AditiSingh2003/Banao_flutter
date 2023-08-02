@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
-import 'package:new_scroll_page/lessons.dart';
-import 'package:new_scroll_page/programs.dart';
-import 'events.dart';
+import 'ScrollSection/events.dart';
+import 'ScrollSection/lessons.dart';
+import 'ScrollSection/programs.dart';
 import 'header.dart';
+
 
 void main() async {
   runApp(

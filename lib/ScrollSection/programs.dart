@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:new_scroll_page/programModel.dart';
+import '../Model/programModel.dart';
 
 class Programs extends StatefulWidget {
   const Programs({super.key});
